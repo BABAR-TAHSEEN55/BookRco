@@ -3,7 +3,6 @@ import AppSidebar from "./components/Pages/AppSidebar.tsx";
 import BooksInfo from "./components/Pages/BooksInfo.tsx";
 import HomePage from "./components/Pages/HomePage.tsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
 const App = () => {
 	return (
 		<BrowserRouter>
