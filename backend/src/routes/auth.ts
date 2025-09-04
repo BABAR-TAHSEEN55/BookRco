@@ -22,13 +22,13 @@ User.get("/logout", async (req: Request, res: Response) => {
 });
 User.get("/me", async (req: Request, res: Response) => {
     const isAuthenticated = await kindeClient.isAuthenticated(sessionManager); // Boolean: true or false
-    res.json({ isAuthenticated });
+
     if (!isAuthenticated) {
         // Need to implement, e.g: call an api, etc...
-        return res.status(404).json({ error: "Unauthorized" });
+        return res.status(404).json({ error: "Unauthorized",isAuthenticated });
     } else {
         const user = await kindeClient.getUserProfile(sessionManager);
-        res.status(200).json({ user });
-        // Need to implement, e.g: redirect user to sign in, etc..
+        res.status(200).json({ user ,isAuthenticated});
+
     }
 });
