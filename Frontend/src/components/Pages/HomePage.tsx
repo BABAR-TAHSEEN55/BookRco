@@ -1,71 +1,19 @@
 import { ChevronRight } from "lucide-react";
-import image2 from "../../assets/BooksAssets/InSearchOFLostTimeByMarcelProd.jpeg";
-import image4 from "../../assets/BooksAssets/TheCatcherintheRy.jpeg";
-import image5 from "../../assets/BooksAssets/TheGreatGatsby.jpeg";
 import { Button } from "../ui/button";
-interface Book {
+import { books } from "@/data/data";
+import { useNavigate } from "react-router-dom";
+export interface Book {
 	id: number;
 	title: string;
 	image: string;
 }
 interface BooksProps {
 	books: Book[];
+	Limiter: boolean;
 }
 
-const books: Book[] = [
-	{
-		id: 1,
-		title: "The Great Gatsby",
-		image: image2,
-	},
-	{
-		id: 2,
-		title: "1984",
-		image: image2,
-	},
-	{
-		id: 3,
-		title: "To Kill a Mockingbird",
-		image: image4,
-	},
-	{
-		id: 4,
-		title: "Pride and Prejudice",
-		image: image4,
-	},
-	{
-		id: 5,
-		title: "Moby-Dick",
-		image: image5,
-	},
-	{
-		id: 6,
-		title: "War and Peace",
-		image: image2,
-	},
-	{
-		id: 7,
-		title: "The Catcher in the Rye",
-		image: image2,
-	},
-	{
-		id: 8,
-		title: "Brave New World",
-		image: image4,
-	},
-	{
-		id: 9,
-		title: "Jane Eyre",
-		image: image2,
-	},
-	{
-		id: 10,
-		title: "The Hobbit",
-		image: image4,
-	},
-];
-
 const HomePage = () => {
+	const navigate = useNavigate();
 	return (
 		<div>
 			<div className="p-4">
@@ -76,26 +24,31 @@ const HomePage = () => {
 					>
 						Most Popular
 					</h1>
-					<Button className=" hover:scale-105">
+					<Button
+						className=" hover:scale-105"
+						onClick={() => {
+							navigate("/books");
+						}}
+					>
 						See All <ChevronRight />
 					</Button>
 				</div>
 
-				<Books books={books} />
+				<Books books={books} Limiter={true} />
 				<div className="py-14">
 					<div className="flex justify-between">
 						<h1
 							className="mb-4 font-mono font-bold text-2xl uppercase tracking-wide
 							"
 						>
-							Most Popular
+							Recommended
 						</h1>
 						<Button className=" hover:scale-105">
 							See All <ChevronRight />
 						</Button>
 					</div>
 
-					<Books books={books} />
+					<Books books={books} Limiter={true} />
 				</div>
 			</div>
 		</div>
@@ -104,8 +57,9 @@ const HomePage = () => {
 
 export default HomePage;
 
-const Books = ({ books }: BooksProps) => {
-	const LimitBooks = books.slice(0, 5);
+export const Books = ({ books, Limiter = true }: BooksProps) => {
+	const LimitBooks = Limiter ? books.slice(0, 5) : books;
+
 	return (
 		<div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-8  place-items-center">
 			{LimitBooks.map((book) => (
@@ -149,4 +103,3 @@ const Books = ({ books }: BooksProps) => {
 // };
 
 //TODO: HOver reveal Animation
-//TODO: Create Component to remove redunancy
