@@ -136,8 +136,8 @@ const AppSidebar = () => {
 							<SidebarGroupContent>
 								<SidebarGroupLabel className="text-lg font-bold mb-4">Genres</SidebarGroupLabel>
 								<SidebarMenu className="text-primary flex flex-col space-y-2">
-									{InitialItems.map((item) => (
-										<SidebarMenuItem>
+									{InitialItems.map((item, index) => (
+										<SidebarMenuItem key={index}>
 											<SidebarMenuButton>
 												<a href={item.url}>{item.title}</a>
 											</SidebarMenuButton>
@@ -160,8 +160,8 @@ const AppSidebar = () => {
 									<SidebarGroupContent>
 										<ScrollArea className="h-[200px]  rounded-md ">
 											<SidebarMenu className="text-primary flex flex-col space-y-2 overflow-y-auto ">
-												{collapsibleItems.map((item) => (
-													<SidebarMenuItem>
+												{collapsibleItems.map((item, index) => (
+													<SidebarMenuItem key={index}>
 														<SidebarMenuButton>
 															<a href={item.url}>{item.title}</a>
 														</SidebarMenuButton>
@@ -181,8 +181,8 @@ const AppSidebar = () => {
 									Popular Writers
 								</SidebarGroupLabel>
 								<SidebarMenu className="text-primary flex flex-col space-y-2">
-									{InitialAurhors.map((item) => (
-										<SidebarMenuItem className="flex items-center space-x-4 m-2">
+									{InitialAurhors.map((item, index) => (
+										<SidebarMenuItem key={index} className="flex items-center space-x-4 m-2">
 											<img src={item.pfp} className="size-10 rounded-full" />
 
 											<SidebarMenuButton>{item.name}</SidebarMenuButton>
@@ -207,8 +207,8 @@ const AppSidebar = () => {
 									<SidebarGroupContent>
 										<ScrollArea className="h-[200px]  rounded-md ">
 											<SidebarMenu className="text-primary flex flex-col space-y-2 overflow-y-auto ">
-												{AdditionalAuthors.map((item) => (
-													<SidebarMenuItem>
+												{AdditionalAuthors.map((item, index) => (
+													<SidebarMenuItem key={index}>
 														<SidebarMenuButton>{item.name}</SidebarMenuButton>
 													</SidebarMenuItem>
 												))}

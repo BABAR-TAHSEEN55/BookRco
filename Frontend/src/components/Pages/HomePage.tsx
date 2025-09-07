@@ -3,8 +3,8 @@ import { Button } from "../ui/button";
 import { books } from "@/data/data";
 import { useNavigate } from "react-router-dom";
 export interface Book {
-	id: number;
-	title: string;
+	id?: number;
+	name: string;
 	image: string;
 }
 interface BooksProps {
@@ -67,9 +67,9 @@ export const Books = ({ books, Limiter = true }: BooksProps) => {
 					key={book.id}
 					className="flex flex-col items-center border rounded shadow-2xl p-4  hover:bg-gray-600 transition-all duration-400 relative  hover:scale-105"
 				>
-					<img src={book.image} alt={book.title} className="w-auto md:h-48 mb-2" />
+					<img src={book.image} alt={book.name} className="w-auto md:h-48 mb-2" />
 
-					<p className="font-semibold text-center py-4">{book.title}</p>
+					<p className="font-semibold text-center py-4">{book.name}</p>
 				</div>
 			))}
 		</div>
