@@ -51,6 +51,7 @@ interface Author {
 	id: number;
 	name: string;
 	pfp: string;
+	url: string;
 }
 
 const AdditionalAuthor: Author[] = [
@@ -58,54 +59,63 @@ const AdditionalAuthor: Author[] = [
 		id: 6,
 		name: "Jane Austen",
 		pfp: "https://randomuser.me/api/portraits/women/6.jpg",
+		url: "/author/jane-austen",
 	},
 	{
 		id: 7,
 		name: "George Orwell",
 		pfp: "https://randomuser.me/api/portraits/men/7.jpg",
+		url: "/author/george-orwell",
 	},
 	{
 		id: 8,
 		name: "Toni Morrison",
 		pfp: "https://randomuser.me/api/portraits/women/8.jpg",
+		url: "/author/toni-morrison",
 	},
 	{
 		id: 9,
 		name: "Mark Twain",
 		pfp: "https://randomuser.me/api/portraits/men/9.jpg",
+		url: "/author/mark-twain",
 	},
 	{
 		id: 10,
 		name: "Virginia Woolf",
 		pfp: "https://randomuser.me/api/portraits/women/10.jpg",
+		url: "/author/virginia-woolf",
 	},
 ];
 const Authors: Author[] = [
 	{
 		id: 1,
 		name: "Agatha Christie",
-		// pfp: "https://randomuser.me/api/portraits/women/1.jpg",
 		pfp: pfp1,
+		url: "/author/agatha-christie",
 	},
 	{
 		id: 2,
 		name: "Isaac Asimov",
 		pfp: pfp2,
+		url: "/author/isaac-asimov",
 	},
 	{
 		id: 3,
 		name: "J.K. Rowling",
 		pfp: pfp3,
+		url: "/author/jk-rowling",
 	},
 	{
 		id: 4,
 		name: "Stephen King",
 		pfp: pfp4,
+		url: "/author/stephen-king",
 	},
 	{
 		id: 5,
 		name: "Haruki Murakami",
 		pfp: pfp5,
+		url: "/author/haruki-murakami",
 	},
 ];
 const AppSidebar = () => {
@@ -116,7 +126,7 @@ const AppSidebar = () => {
 
 	return (
 		<div>
-			<Sidebar>
+			<Sidebar collapsible="icon">
 				<ScrollArea className="h-full">
 					<SidebarHeader>
 						<SidebarMenu>
@@ -185,7 +195,9 @@ const AppSidebar = () => {
 										<SidebarMenuItem key={index} className="flex items-center space-x-4 m-2">
 											<img src={item.pfp} className="size-10 rounded-full" />
 
-											<SidebarMenuButton>{item.name}</SidebarMenuButton>
+											<SidebarMenuButton>
+												<a href={item.url}>{item.name}</a>
+											</SidebarMenuButton>
 											{/*Images*/}
 										</SidebarMenuItem>
 									))}

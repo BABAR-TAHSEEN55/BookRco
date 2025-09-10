@@ -2,6 +2,9 @@ import { ChevronRight } from "lucide-react";
 import { Button } from "../ui/button";
 import { books } from "@/data/data";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import { Skeleton } from "../ui/skeleton";
 export interface Book {
 	id?: number;
 	name: string;
@@ -59,19 +62,36 @@ export default HomePage;
 
 export const Books = ({ books, Limiter = true }: BooksProps) => {
 	const LimitBooks = Limiter ? books.slice(0, 5) : books;
+	const [Delay, setDelay] = useState(false);
+	useEffect(() => {
+		const delayed = setTimeout(() => {
+			setDelay(true);
+		}, 3000);
+		return () => clearTimeout(delayed);
+	}, []);
 
 	return (
-		<div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-8  place-items-center">
-			{LimitBooks.map((book) => (
-				<div
-					key={book.id}
-					className="flex flex-col items-center border rounded shadow-2xl p-4  hover:bg-gray-600 transition-all duration-400 relative  hover:scale-105"
-				>
-					<img src={book.image} alt={book.name} className="w-auto md:h-48 mb-2" />
+		<div>
+			{Delay ? (
+				<div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-8  place-items-center">
+					{LimitBooks.map((book) => (
+						<div
+							key={book.id}
+							className="flex flex-col items-center border rounded shadow-2xl p-4  hover:bg-gray-600 transition-all duration-400 relative  hover:scale-105 h-[300px] w-[160px] md:h-[320px] md:w-[180px] line-clamp-2 "
+						>
+							<img src={book.image} alt={book.name} className="w-auto md:h-48 mb-2" />
 
-					<p className="font-semibold text-center py-4">{book.name}</p>
+							<p className="font-semibold text-center py-4">{book.name}</p>
+						</div>
+					))}
 				</div>
-			))}
+			) : (
+				<div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-8  place-items-center">
+					{LimitBooks.map((_, index) => (
+						<Skeleton key={index} className="h-[240px] w-[150px]" />
+					))}
+				</div>
+			)}
 		</div>
 	);
 };
