@@ -1,7 +1,9 @@
+import { type Response, type Request, type NextFunction } from "express";
 import {
     createKindeServerClient,
     GrantType,
     type SessionManager,
+    type UserType,
 } from "@kinde-oss/kinde-typescript-sdk";
 
 // Client for authorization code flow
@@ -16,8 +18,6 @@ export const kindeClient = createKindeServerClient(
     },
 );
 
-console.log("Client ID:", process.env.KINDE_CLIENT_ID);
-console.log("Redirect URI:", process.env.KINDE_REDIRECT_URI);
 //NOTE: Temporary storing it in js object IN MEMORY
 let store: Record<string, unknown> = {};
 export const sessionManager: SessionManager = {
@@ -33,4 +33,28 @@ export const sessionManager: SessionManager = {
     async destroySession() {
         store = {};
     },
+};
+
+//Refactor this shi~
+declare global {
+    namespace Express {
+        interface Request {
+            user?: UserType;
+        }
+    }
+}
+
+export const getUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    const isAuthenticated = await kindeClient.isAuthenticated(sessionManager); // Boolean: true or false
+    if (!isAuthenticated) {
+        return res.status(404).json({ error: "Unauthorized", isAuthenticated });
+    } else {
+        const user: UserType = await kindeClient.getUserProfile(sessionManager);
+        req.user = user;
+        next();
+    }
 };

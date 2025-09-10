@@ -1,5 +1,5 @@
 import { Router, type Request, type Response } from "express";
-import { kindeClient, sessionManager } from "../utils/kind.ts";
+import { getUser, kindeClient, sessionManager } from "../utils/kind.ts";
 
 export const User: Router = Router();
 User.get("/login", async (req: Request, res: Response) => {
@@ -20,15 +20,10 @@ User.get("/logout", async (req: Request, res: Response) => {
     const logoutUrl = await kindeClient.logout(sessionManager);
     return res.redirect(logoutUrl.toString());
 });
-User.get("/me", async (req: Request, res: Response) => {
+User.get("/me",getUser, async (req: Request, res: Response) => {
     const isAuthenticated = await kindeClient.isAuthenticated(sessionManager); // Boolean: true or false
-
-    if (!isAuthenticated) {
-        // Need to implement, e.g: call an api, etc...
-        return res.status(404).json({ error: "Unauthorized",isAuthenticated });
-    } else {
-        const user = await kindeClient.getUserProfile(sessionManager);
+   const user = req.user
+    console.log(req.user)
         res.status(200).json({ user ,isAuthenticated});
 
-    }
 });
